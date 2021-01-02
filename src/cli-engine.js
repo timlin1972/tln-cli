@@ -24,6 +24,9 @@ const cliScripts = {
   'show webServer': command => CliScripts.showWebServer(command),
   'load graphqlServer': command => CliScripts.loadGraphqlServer(command),
   'start graphqlServer': command => CliScripts.startGraphqlServer(command),
+  'load wol': command => CliScripts.loadWol(command),
+  'wol show': command => CliScripts.wolShow(command),
+  'wol sendWol': (command, data) => CliScripts.wolSendWol(command, data),
 }
 
 class CliEngine {
@@ -34,7 +37,7 @@ class CliEngine {
     this.log('info', 'Initialized');
   }
 
-  run = command => {
+  run = (command, data=null) => {
     return new Promise((resolve, reject) => {
       const msgRunI18n = this.i18n ? this.i18n.t('Run') : 'Run';
       this.log('debug', `${msgRunI18n}: ${command}`, true);
@@ -43,7 +46,7 @@ class CliEngine {
       }
 
       if (command in cliScripts) {
-        cliScripts[command](command)
+        cliScripts[command](command, data)
           .then(ret => resolve(ret))
           .catch(err => reject(err));
       }

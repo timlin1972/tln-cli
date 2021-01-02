@@ -24,7 +24,7 @@ class Cli {
     this.log('info', 'Initialized');
   }
 
-  run = command => {
+  run = (command, data=null) => {
     if (command === 'add cli logger') {
       return new Promise((resolve) => {
         this.logger = this.cliEngine.getLogger();
@@ -40,7 +40,7 @@ class Cli {
       });
     }
     else {
-      return this.cliEngine.run(command);
+      return this.cliEngine.run(command, data);
     }
   }
 

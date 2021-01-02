@@ -7,6 +7,7 @@ let graphqlMgr = null;
 let iam = null;
 let webServer = null;
 let graphqlServer = null;
+let wol = null;
 
 const loadLogger = _ => {
   return new Promise((resolve) => {
@@ -26,6 +27,7 @@ const loadI18n = _ => {
     i18n = new I18n({
       logger,
       resources,
+      // lng: 'en',
       lng: 'zh',
       // debug: true,
     });
@@ -112,6 +114,22 @@ const loadGraphqlServer = _ => {
 
 const startGraphqlServer = _ => graphqlServer.start();
 
+const loadWol = _ => {
+  return new Promise((resolve) => {
+    const Wol = require('../../tln-wol');
+
+    wol = new Wol({
+      logger,
+      i18n,
+    }); 
+
+    resolve(null);
+  });
+}
+
+const wolShow = _ => wol.show();
+const wolSendWol = (_, data) => wol.sendWol(data);
+
 module.exports = {
   loadLogger,
   getLogger,
@@ -127,4 +145,7 @@ module.exports = {
   showWebServer,
   loadGraphqlServer,
   startGraphqlServer,
+  loadWol,
+  wolShow,
+  wolSendWol,
 }
