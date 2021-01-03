@@ -114,6 +114,24 @@ const loadGraphqlServer = _ => {
 
 const startGraphqlServer = _ => graphqlServer.start();
 
+const setGraphqlServerHttpServer= _ => {
+  return new Promise((resolve) => {
+
+    graphqlServer.setHttpServer(webServer.getHttpServer());
+
+    resolve(null);
+  });
+}
+
+const setGraphqlServerHttpsServer= _ => {
+  return new Promise((resolve) => {
+
+    graphqlServer.setHttpsServer(webServer.getHttpsServer());
+
+    resolve(null);
+  });
+}
+
 const loadWol = _ => {
   return new Promise((resolve) => {
     const Wol = require('../../tln-wol');
@@ -145,6 +163,8 @@ module.exports = {
   showWebServer,
   loadGraphqlServer,
   startGraphqlServer,
+  setGraphqlServerHttpServer,
+  setGraphqlServerHttpsServer,
   loadWol,
   wolShow,
   wolSendWol,
